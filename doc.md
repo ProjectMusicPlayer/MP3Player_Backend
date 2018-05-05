@@ -103,7 +103,7 @@ Params:
     msg:"{error_massage}" //错误消息
 }
 ```
-## GET `/user/regisitor` 用户注册
+## POST `/user/regisitor` 用户注册
 用户通过此接口注册，若注册成功则自动完成登录并返回access_token<br>
 
 Params:
