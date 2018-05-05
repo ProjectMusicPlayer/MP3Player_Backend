@@ -1,12 +1,12 @@
 # 数据库表
 ### user 用户表
-- `username` **(P)**string,用户名
+- `username` **(P)** string,用户名
 - `password` string,密码(哈希)
 - `regidate` int,注册日期
 
 ### token token表
 - `username` string,用户名
-- `token` **(P)**string,token
+- `token` **(P)** string,token
 - `vaild time` int,有效期                                                 
 
 ### mp3 歌曲表
