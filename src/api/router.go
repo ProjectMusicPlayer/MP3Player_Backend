@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 //	"net/http"
 )
@@ -10,10 +9,8 @@ func routerInit(){
 	config.service.router = gin.Default()	
 	v1 := config.service.router.Group("v1")
 	{
-		//stu 对接apihdu
 		v1.POST("/user/token", func(c *gin.Context) {
-			token := c.Query("token")
-			fmt.Println(token)
+			
 		})		
 		v1.DELETE("/user/token",func(c *gin.Context){
 			
