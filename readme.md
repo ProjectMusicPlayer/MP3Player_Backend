@@ -2,7 +2,7 @@
 
 
 - [接口文档](doc.md)
-- [接口代码](src/)
+- [接口代码](src/api/)
 
 ### NOTES
 - 使用`go`开发，使用`gin`作为http框架
