@@ -12,7 +12,7 @@ API 采用了 OAuth2 验证机制 (See [OAuth](https://en.wikipedia.org/wiki/OAu
 ## FAQ
 - 使用此接口，即代表调用者默认同意 [The JSON License](http://www.json.org/license.html)
 - 接口入口使用正则匹配，请确保完全填满所需数据，否则会被`401 invaild params`
-## GET `/user/login` 用户登录
+## POST `/user/token` 用户登录
 发送用户名密码完成登录，若成功则返回Access_token<br>
 Params:
 - `username` string,用户名
@@ -36,7 +36,7 @@ Params:
     msg:"{error_massage}" //错误消息
 }
 ```
-## GET `/user/logout` 用户登出
+## DELETE `/user/token` 用户登出
 发送token进行注销，注销之后token立即失效<br>
 Params:
 - `access_token` string,用户token
@@ -127,7 +127,7 @@ Params:
     msg:"{error_massage}" //错误消息
 }
 ```
-## GET `/mp3/serch` 获取搜索结果列表
+## GET `/mp3s` 获取搜索结果列表
 发送搜索关键词获取搜索结果数组<br>
 
 Params:
@@ -170,12 +170,12 @@ Params:
     msg:"{error_massage}" //错误消息
 }
 ```
-## GET `/mp3/downloadLink` 获取下载链接
+## GET `/mp3s/{mp3id}/link` 获取下载链接
 
 通过搜索结果的歌曲id返回cdn下载链接<br>
 
 Params:
-- `songid` string,歌曲id
+- `mp3id` string,歌曲id
 
 成功:
 ```
@@ -193,7 +193,7 @@ Params:
     msg:"{error_massage}" //错误消息
 }
 ```
-## POST `/mp3/updateMusic` 提交新的歌曲
+## POST `/mp3s` 提交新的歌曲
 **此接口Access_token不可用**  后台提交歌曲信息
 
 <br>
@@ -210,6 +210,7 @@ Params:
 {
     error:"0",   //成功代码0
     msg:"update song info success", //成功消息
+    id:"{mp3id}"    //上传的mp3 id
 }
 ```
 错误:
