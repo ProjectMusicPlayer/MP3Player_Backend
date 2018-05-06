@@ -220,6 +220,31 @@ Params:
     msg:"{error_massage}" //错误消息
 }
 ```
+
+## PUT `/report` 提交工单
+用户在反馈页面提交工单
+<br>
+
+Params:
+- `token` 用户token
+- `body` 反馈主体
+
+成功:
+```
+{
+    error:"0",   //成功代码0
+    msg:"report success", //成功消息
+}
+```
+错误:
+```
+{
+    error:"{error_code}",   //错误代码
+    msg:"{error_massage}" //错误消息
+}
+```
+
+
 ---
 - `@Autor` : `SJC`
 - `@version` : `1.1`

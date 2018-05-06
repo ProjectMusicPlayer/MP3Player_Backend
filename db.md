@@ -26,3 +26,9 @@
 - `username` string,操作用户名
 - `operation` string,操作名
 - `time` int 操作时间
+
+### report 建议反馈表
+- `id` string,反馈id(工单号)
+- `username` string,用户名
+- `reportBody` string,反馈主体
+- `timeStamp` int,反馈时间
