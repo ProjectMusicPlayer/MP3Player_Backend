@@ -32,3 +32,9 @@
 - `username` string,用户名
 - `reportBody` string,反馈主体
 - `timeStamp` int,反馈时间
+
+### state 状态表
+- `state` **(P)** string,stateid
+- `username` string,用户名
+- `data` string,附加参数
+- `vaildtime` int,有效期

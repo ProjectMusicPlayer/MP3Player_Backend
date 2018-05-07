@@ -104,20 +104,19 @@ Params:
 }
 ```
 ## POST `/user/regisitor` 用户注册
-用户通过此接口注册，若注册成功则自动完成登录并返回access_token<br>
+用户通过此接口注册，将会发送一封激活邮件<br>
 
 Params:
 - `username` string,用户名
+- `邮箱` string,用户名
 - `password` string,密码
 
 成功:
 ```
 {
     error:"0",   //成功代码0
-    msg:"get token status success", //成功消息
-    queryTimeStamp:"{timestamp}", //查询时间
-    vaild:"{vaild}",    //token状态 1有效，2无效
-    vaildTime:"{timestamp}" //token过期时间
+    msg:"send mail success", //成功消息
+    vaildTime:"{timestamp}" //mail过期时间
 }
 ```
 错误:
@@ -127,6 +126,30 @@ Params:
     msg:"{error_massage}" //错误消息
 }
 ```
+## GET `/user/regisitor/mail` 邮箱注册链接接口
+## POST `/user/forget` 忘记密码
+用户通过此接口注册，将会发送一封重置密码邮件<br>
+
+Params:
+- `username` string,用户名
+- `邮箱` string,用户名
+
+成功:
+```
+{
+    error:"0",   //成功代码0
+    msg:"send mail success", //成功消息
+    vaildTime:"{timestamp}" //mail过期时间
+}
+```
+错误:
+```
+{
+    error:"{error_code}",   //错误代码
+    msg:"{error_massage}" //错误消息
+}
+```
+## GET `/user/forget/mail` 邮箱找回密码链接接口
 ## GET `/mp3s` 获取搜索结果列表
 发送搜索关键词获取搜索结果数组<br>
 
