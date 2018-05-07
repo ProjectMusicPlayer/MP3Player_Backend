@@ -22,7 +22,7 @@ func routerInit(){
 			
 		})		
 		v1.POST("/user/regisitor",func(c *gin.Context){
-			
+			c.JSON(user_regisiter(c.Query("username"),c.Query("password")))
 		})		
 		v1.GET("/mp3s",func(c *gin.Context){
 			
@@ -35,5 +35,6 @@ func routerInit(){
 		})
 
 	}
-	config.service.router.Run(":8081")
+	//mp3服务挂靠在8082端口
+	config.service.router.Run(":8082")
 }

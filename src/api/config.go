@@ -14,8 +14,6 @@ type Config struct{
 type Service struct {
 	router *gin.Engine
 	db Sqlconn
-	dbBind Sqlconn
-	dbAuth Sqlconn
 	redis redis.Conn
 }
 
