@@ -5,16 +5,16 @@ import (
 	"time"
 )
 
-func addUser(user string,passwd string)(err error){
-	rows,err := config.service.db.conn.Query("select * from ? where username = ?",tables.user)
+func addUser(user string,passwd string,email string)(err error){
+	rows,err := config.service.db.conn.Query("select * from  "+tables.user+"  where username = ?",user)
 	if(err!=nil){
 		return
 	}
 	defer rows.Close()
-	if(rows.Next()){
+	if !(rows.Next()){
 		pswdmd5 := md5_encode(passwd)
 		timer := time.Now().Unix()
-		_,err = config.service.db.conn.Exec("insert into ? values (?,?,?)",tables.user,user,pswdmd5,timer)
+		_,err = config.service.db.conn.Exec("insert into "+tables.user+"  values (?,?,?,?)",user,pswdmd5,email,timer)
 		if(err!=nil){
 			return
 		}else{
@@ -25,8 +25,22 @@ func addUser(user string,passwd string)(err error){
 	}
 }
 
+func checkUser(user string)(b bool,err error){
+	rows,err := config.service.db.conn.Query("select * from  "+tables.user+"  where username = ?",user)
+	if(err!=nil){
+		return false,err
+	}
+	defer rows.Close()
+	if (rows.Next()){
+		return true,nil
+	}else{
+		return false,nil
+	}
+}
+
+
 func checkLoginUser(user string,passwd string)(err error){
-	rows,err := config.service.db.conn.Query("select * from ? where username = ?",tables.user)
+	rows,err := config.service.db.conn.Query("select * from "+tables.user+" where username = ?",user)
 	if(err!=nil){
 		return
 	}
@@ -48,14 +62,32 @@ func checkLoginUser(user string,passwd string)(err error){
 	return fmt.Errorf("incorrect username or password!")
 }
 
-func checkLoginToken(token string){
 
+func checkLoginToken(token string)(user string,err error){
+	rows,err:=config.service.db.conn.Query("select * from token where token = ?",token)
+	if(err!=nil){
+		return "",err
+	}
+	defer rows.Close()
+	if(rows.Next()){
+		var p1,p2 string
+		var p3 int64
+		err = rows.Scan(&p1,&p2,&p3)
+		if(err!=nil){
+			return "",err
+		}
+		if(time.Now().Unix()>p3){
+			return "",fmt.Errorf("token timeout")
+		}
+		return p1,nil
+	}
+	return "",fmt.Errorf("invaild token")
 }
 
 func writeToken(user string)(token string,err error){
 	token = tokenCrt()
 	timev := int(time.Now().Unix())
-	_,err=config.service.db.conn.Exec("insert into ? values(?,?,?)",tables.token,user,token,timev)
+	_,err=config.service.db.conn.Exec("insert into "+tables.token+" values(?,?,?)",user,token,timev)
 	if(err!=nil){
 		return	"",err
 	}
