@@ -14,19 +14,26 @@ func routerInit(){
 		//login
 		v1.POST("/user/token", func(c *gin.Context) {
 			c.JSON(user_login(c.Query("username"),c.Query("password")))
-		})		
+		})
+		//logout
 		v1.DELETE("/user/token",func(c *gin.Context){
-			
+			c.JSON(user_logout(c.GetHeader("Authorization")))
 		})		
+		//getuserinfo
 		v1.GET("/user/info",func(c *gin.Context){
-			
+			c.JSON(getUserInfo(c.GetHeader("Authorization")))
+		})
+		//gettokeninfo
+		/*
+		v1.GET("/user/token/info",func(c *gin.Context){
+			//目前认为没有意义
 		})		
-		v1.GET("/user/token/logout",func(c *gin.Context){
-			
-		})		
+		*/
+		//注册	
 		v1.POST("/user/regisitor",func(c *gin.Context){
 			c.JSON(user_regisiter(c.Query("username"),c.Query("password"),c.Query("email")))
-		})			
+		})		
+		//注册回调	
 		v1.GET("/user/regisitor/mailRedirect/:state",func(c *gin.Context){
 			stus,data := user_regisiter_mailRedirect(c.Param("state"))
 			if(stus == 200){
@@ -53,6 +60,14 @@ func routerInit(){
 		//login	
 		v1.GET("/debug/user/login",func(c *gin.Context){
 			c.JSON(user_login(c.Query("username"),c.Query("password")))
+		})
+		//获取用户信息
+		v1.GET("debug/user/info",func(c *gin.Context){
+			c.JSON(getUserInfo(c.Query("token")))
+		})	
+		//登出
+		v1.GET("debug/user/logout",func(c *gin.Context){
+			c.JSON(user_logout(c.Query("token")))
 		})
 
 	}
