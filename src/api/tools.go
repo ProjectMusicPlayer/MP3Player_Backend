@@ -235,3 +235,19 @@ func makeErrJson(errcode int,errdata interface{})(int , map[string]interface{}){
     m["msg"] = fmt.Sprint(errdata)
     return 200,m
 }
+
+func makeErrJson401(errcode int,errdata interface{})(int , map[string]interface{}){
+    var m map[string]interface{}
+    m = make(map[string]interface{})
+    m["error"] = errcode
+    m["msg"] = fmt.Sprint(errdata)
+    return 200,m
+}
+
+func makeSuccessJson(data string)(int , map[string]interface{}){
+    var m map[string]interface{}
+    m = make(map[string]interface{})
+    m["error"] = 0
+    m["msg"] = data
+    return 200,m
+}
