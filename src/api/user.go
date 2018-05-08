@@ -64,7 +64,7 @@ func user_regisiter_mailRedirect(state string)(code int,data string){
 	data = "regisiter success"
 	return
 }
-
+//登录并签发token
 func user_login(user,passwd string)(int,map[string]interface{}){
 	err := pregCheck2(user,passwd,false)
 	if(err!=nil){
@@ -72,7 +72,7 @@ func user_login(user,passwd string)(int,map[string]interface{}){
 	}
 	err = checkLoginUser(user,passwd)
 	if(err!=nil){
-		return makeErrJson(42001,err)
+		return makeErrJson401(42001,err)
 	}
 	token,err := singToken(user)
 	if(err!=nil){
@@ -84,4 +84,36 @@ func user_login(user,passwd string)(int,map[string]interface{}){
 	m["msg"] = "login success"
 	m["token"] = token
     return 200,m
+}
+
+//获取用户信息
+func getUserInfo(token string)(int,map[string]interface{}){
+	err := pregCheck(token,false)
+	if(err!=nil){
+		return makeErrJson(42100,err)
+	}
+	data,err := readUserInfo(token)
+	if(err!=nil){
+		return makeErrJson401(42101,err)
+	}
+	var m map[string]interface{}
+	m = make(map[string]interface{})
+    m["error"] = 0
+	m["msg"] = "get user info success"
+	m["data"] = data
+	return 200,m
+}
+
+//登出并销毁token
+func user_logout(token string)(int,map[string]interface{}){
+	err := pregCheck(token,false)
+	if(err!=nil){
+		return makeErrJson(43000,err)
+	}
+	err = tokenDestory(token)
+	if(err!=nil){
+		return makeErrJson(43000,err)
+	}
+	return makeSuccessJson("logout success")
+
 }
