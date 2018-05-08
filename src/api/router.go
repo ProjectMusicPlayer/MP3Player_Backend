@@ -9,6 +9,7 @@ func routerInit(){
 	config.service.router = gin.Default()	
 	v1 := config.service.router.Group("v1")
 	{
+		//release
 		v1.POST("/user/token", func(c *gin.Context) {
 			
 		})		
@@ -22,7 +23,15 @@ func routerInit(){
 			
 		})		
 		v1.POST("/user/regisitor",func(c *gin.Context){
-			c.JSON(user_regisiter(c.Query("username"),c.Query("password")))
+			c.JSON(user_regisiter(c.Query("username"),c.Query("password"),c.Query("email")))
+		})			
+		v1.GET("/user/regisitor/mailRedirect/:state",func(c *gin.Context){
+			stus,data := user_regisiter_mailRedirect(c.Param("state"))
+			if(stus == 200){
+				c.String(200,data)
+			}else{
+				c.Redirect(302,data)
+			}
 		})		
 		v1.GET("/mp3s",func(c *gin.Context){
 			
@@ -33,6 +42,11 @@ func routerInit(){
 		v1.POST("/mp3s",func(c *gin.Context){
 
 		})
+
+		//debug				
+		v1.GET("/user/regisitor",func(c *gin.Context){
+			c.JSON(user_regisiter(c.Query("username"),c.Query("password"),c.Query("email")))
+		})	
 
 	}
 	//mp3服务挂靠在8082端口

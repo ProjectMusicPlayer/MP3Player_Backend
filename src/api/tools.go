@@ -44,6 +44,28 @@ func md5_encode (s string) string {
 	return ret
 }
 
+func pregCheck(p1 string,ept bool)error{
+    //入口正则
+    //"^[A-Za-z0-9]+$"英文字母数字//ept参数设置是否允许空值
+    m1, err00 := regexp.MatchString("^[A-Za-z0-9%.]+$", p1)
+    if (err00!=nil){
+        return fmt.Errorf("pregErr:%s",err00)
+    }
+    //空串或无效则返回错误
+    if !(m1){
+        return fmt.Errorf("invaild params")
+    }
+    if(ept){
+        return nil
+    }else{
+        if(p1!=""){
+            return nil
+        }else{
+            return fmt.Errorf("invaild empty params")
+        }
+    }
+}
+
 func pregCheck2(p1 string,p2 string,ept bool)error{
     //入口正则
     //"^[A-Za-z0-9]+$"英文字母数字//ept参数设置是否允许空值
@@ -206,3 +228,10 @@ func  GetRandomString(l int) string {
     return string(result)  
 }  
 
+func makeErrJson(errcode int,errdata interface{})(int , map[string]interface{}){
+    var m map[string]interface{}
+    m = make(map[string]interface{})
+    m["error"] = errcode
+    m["msg"] = fmt.Sprint(errdata)
+    return 200,m
+}
