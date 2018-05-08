@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+//添加用户
 func addUser(user string,passwd string,email string)(err error){
 	rows,err := config.service.db.conn.Query("select * from  "+tables.user+"  where username = ?",user)
 	if(err!=nil){
@@ -25,6 +26,7 @@ func addUser(user string,passwd string,email string)(err error){
 	}
 }
 
+//检查用户重复
 func checkUser(user string)(b bool,err error){
 	rows,err := config.service.db.conn.Query("select * from  "+tables.user+"  where username = ?",user)
 	if(err!=nil){
@@ -38,7 +40,7 @@ func checkUser(user string)(b bool,err error){
 	}
 }
 
-
+//检验登录
 func checkLoginUser(user string,passwd string)(err error){
 	rows,err := config.service.db.conn.Query("select * from "+tables.user+" where username = ?",user)
 	if(err!=nil){
@@ -63,11 +65,11 @@ func checkLoginUser(user string,passwd string)(err error){
 	return fmt.Errorf("incorrect username or password!")
 }
 
-
-func checkLoginToken(token string)(user string,err error){
+//检验token有效性并返回用户数据
+func checkLoginTokenI(token string)(user string,email string,regidate int64,err error){
 	rows,err:=config.service.db.conn.Query("select * from token where token = ?",token)
 	if(err!=nil){
-		return "",err
+		return "","",0,err
 	}
 	defer rows.Close()
 	if(rows.Next()){
@@ -75,19 +77,58 @@ func checkLoginToken(token string)(user string,err error){
 		var p3 int64
 		err = rows.Scan(&p1,&p2,&p3)
 		if(err!=nil){
-			return "",err
+			return "","",0,err
 		}
 		if(time.Now().Unix()>p3){
-			return "",fmt.Errorf("token timeout")
+			return "","",0,fmt.Errorf("token timeout")
 		}
-		return p1,nil
+		rows1,err:=config.service.db.conn.Query("select * from user where username = ?",p1)
+		if(err!=nil){
+			return "","",0,err
+		}
+		defer rows1.Close()
+		if(rows1.Next()){
+			var username,passwd,email string
+			var regitime int64
+			err = rows1.Scan(&username,&passwd,&email,&regitime) 
+			if(err!=nil){
+				return "","",0,err
+			}
+			return username,email,regitime,nil			
+		}else{
+			return "","",0,fmt.Errorf("invaild user")
+		}
+
 	}
-	return "",fmt.Errorf("invaild token")
+	return "","",0,fmt.Errorf("invaild token")
 }
 
+//检验token有效性
+func checkLoginToken(token string)(err error){
+	rows,err:=config.service.db.conn.Query("select * from token where token = ?",token)
+	if(err!=nil){
+		return err
+	}
+	defer rows.Close()
+	if(rows.Next()){
+		var p1,p2 string
+		var p3 int64
+		err = rows.Scan(&p1,&p2,&p3)
+		if(err!=nil){
+			return err
+		}
+		if(time.Now().Unix()>p3){
+			return fmt.Errorf("token timeout")
+		}
+		return nil
+	}
+	return fmt.Errorf("invaild token")
+}
+
+//写入token
 func writeToken(user string)(token string,err error){
 	token = tokenCrt()
-	timev := int(time.Now().Unix())
+	timev := int(time.Now().Unix()+86400)
 	_,err=config.service.db.conn.Exec("insert into "+tables.token+" values(?,?,?)",user,token,timev)
 	if(err!=nil){
 		return	"",err
@@ -95,6 +136,24 @@ func writeToken(user string)(token string,err error){
 	return token,nil
 }
 
+//根据token获取用户信息
+func readUserInfo(token string)(m map[string]interface{},err error){
+	m = make(map[string]interface{})
+	username,emil,regitime,err := checkLoginTokenI(token)
+	if(err!=nil){
+		return m,err
+	}
+	m["username"] = username
+	m["email"] = emil
+	m["registeTime"] = regitime 
+	return m,nil
+}
+
+//销毁token
+func tokenDestory(token string)(err error){
+	_,err = config.service.db.conn.Exec("delete from token where token = ?",token)
+	return
+}
 func writeMp3Data(){
 
 }
