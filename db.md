@@ -36,5 +36,7 @@
 ### state 状态表
 - `state` **(P)** string,stateid
 - `username` string,用户名
-- `data` string,附加参数
+- `data1` string,附加参数
+- `data2` string,附加参数
+- `data3` string,附加参数
 - `vaildtime` int,有效期
