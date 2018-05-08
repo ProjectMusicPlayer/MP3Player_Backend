@@ -10,8 +10,10 @@ func routerInit(){
 	v1 := config.service.router.Group("v1")
 	{
 		//release
+
+		//login
 		v1.POST("/user/token", func(c *gin.Context) {
-			
+			c.JSON(user_login(c.Query("username"),c.Query("password")))
 		})		
 		v1.DELETE("/user/token",func(c *gin.Context){
 			
@@ -43,10 +45,15 @@ func routerInit(){
 
 		})
 
-		//debug				
-		v1.GET("/user/regisitor",func(c *gin.Context){
+		//debug	
+		//regisitor
+		v1.GET("/debug/user/regisitor",func(c *gin.Context){
 			c.JSON(user_regisiter(c.Query("username"),c.Query("password"),c.Query("email")))
-		})	
+		})
+		//login	
+		v1.GET("/debug/user/login",func(c *gin.Context){
+			c.JSON(user_login(c.Query("username"),c.Query("password")))
+		})
 
 	}
 	//mp3服务挂靠在8082端口

@@ -47,12 +47,13 @@ func checkLoginUser(user string,passwd string)(err error){
 	defer rows.Close()
 	if(rows.Next()){
 		var p1,p2,p3 string
-		err = rows.Scan(&p1,&p2,&p3)
+		var p4 int64
+		err = rows.Scan(&p1,&p2,&p3,&p4)
 		if(err!=nil){
 			return
 		}
 		pswd := p2
-		passwd = md5_encode(pswd)
+		passwd = md5_encode(passwd)
 		if(pswd != passwd){
 			return fmt.Errorf("incorrect username or password!")
 		}else{
