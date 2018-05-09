@@ -10,7 +10,7 @@
 - 必须使用全链路`https`保证数据安全
 - 采用`OAuth2`验证机制，根据应用程序需求发送flow
 - 数据库仅限本地方问，不对外部开放
-
+- 采用 `mit license` 开源协议对代码开源 [THE MIT LICENSE](LICENSE)
 
 ---
 - `@Autor` : `SJC`
