@@ -4,36 +4,35 @@ import (
 	"fmt"
 )
 
+
+/*
+user控制器
+@Author SJC
+@Update at 18.5.9
+*/
+
+
 func user_regisiter(user string,pswd string,email string)(code int,m map[string]interface{}){
 	code = 200
 	m = make(map[string]interface{})
 	err := pregCheck2(user,pswd,false)
 	if(err!=nil){
-		m["error"] = 40001
-		m["msg"] = fmt.Sprint(err)
-		return
+		return makeErrJson(40001,err)
 	}
 	b,err := checkUser(user)
 	if(err!=nil){
-		m["error"] = 40002
-		m["msg"] = fmt.Sprint(err)
-		return
+		return makeErrJson(40002,err)
 	}
 	if(b){
-		m["error"] = 40003
-		m["msg"] = "user already exist"
-		return
+		return makeErrJson(40003,"user already existes")
 	}
 	state := crtStateId()
 	err = writeState(state,user,pswd,email,"")
 	if(err!=nil){
-		m["error"] = 40004
-		m["msg"] = fmt.Sprint(err)
+		return makeErrJson(40004,err)
 	}
 	err = sendmail(email,user,state)
-	m["error"] = 0
-	m["msg"] = "mail send success"
-	return
+	return makeSuccessJson("send mail success")
 }
 
 func user_regisiter_mailRedirect(state string)(code int,data string){
@@ -116,4 +115,32 @@ func user_logout(token string)(int,map[string]interface{}){
 	}
 	return makeSuccessJson("logout success")
 
+}
+
+//修改密码 
+func changePswd(token,old,new string)(int,map[string]interface{}){
+	err := pregCheck3(token,new,old,false)
+	if(err!=nil){
+		return makeErrJson401(42204,err)
+	}
+	user,_,_,err := checkLoginTokenI(token)
+	if(err!=nil){
+		return makeErrJson401(42200,err)
+	}
+	err = checkLoginUser(user,old)
+	if(err!=nil){
+		return makeErrJson401(42201,err)
+	}
+	if(old==new){
+		return makeErrJson401(42202,"old password is same as new password")
+	}
+	err = changePswdDB(user,new)
+	if(err!=nil){
+		return makeErrJson401(42202,err)
+	}
+	err = tokenDestoryByUser(user)
+	if(err!=nil){
+		return makeErrJson401(42203,err)
+	}
+	return makeSuccessJson("update password successfully")
 }
