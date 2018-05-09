@@ -153,6 +153,20 @@ func readUserInfo(token string)(m map[string]interface{},err error){
 func tokenDestory(token string)(err error){
 	_,err = config.service.db.conn.Exec("delete from token where token = ?",token)
 	return
+}//销毁一个用户的所有token
+func tokenDestoryByUser(user string)(err error){
+	_,err = config.service.db.conn.Exec("delete from token where user = ?",user)
+	return
+}
+
+//修改密码
+func changePswdDB(user,newpswd string)(err error){
+	newpswd = md5_encode(newpswd)
+	_,err = config.service.db.conn.Exec("update user set password = ? where username = ?",newpswd,user)
+	if(err!=nil){
+		return
+	}
+	return nil
 }
 func writeMp3Data(){
 
