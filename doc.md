@@ -149,6 +149,28 @@ Params:
     msg:"{error_massage}" //错误消息
 }
 ```
+## POST `/user/password` 修改密码
+用户通过此接口注册，将会发送一封重置密码邮件<br>
+
+Params:
+- `old` string,用户名
+- `new` string,用户名
+
+成功:
+```
+{
+    error:"0",   //成功代码0
+    msg:"send mail success", //成功消息
+    vaildTime:"{timestamp}" //mail过期时间
+}
+```
+错误:
+```
+{
+    error:"{error_code}",   //错误代码
+    msg:"{error_massage}" //错误消息
+}
+```
 ## GET `/user/forget/mail` 邮箱找回密码链接接口
 ## GET `/mp3s` 获取搜索结果列表
 发送搜索关键词获取搜索结果数组<br>
