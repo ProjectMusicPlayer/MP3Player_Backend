@@ -41,6 +41,10 @@ func routerInit(){
 			}else{
 				c.Redirect(302,data)
 			}
+		})
+		//修改密码
+		v1.POST("/user/password",func(c *gin.Context){
+			c.JSON(changePswd(c.GetHeader("Authorization"),c.Query("old"),c.Query("new")))
 		})		
 		v1.GET("/mp3s",func(c *gin.Context){
 			
@@ -65,6 +69,10 @@ func routerInit(){
 		v1.GET("debug/user/info",func(c *gin.Context){
 			c.JSON(getUserInfo(c.Query("token")))
 		})	
+		//修改密码
+		v1.GET("debug/pswd/change",func(c *gin.Context){
+			c.JSON(changePswd(c.Query("token"),c.Query("old"),c.Query("new")))
+		})
 		//登出
 		v1.GET("debug/user/logout",func(c *gin.Context){
 			c.JSON(user_logout(c.Query("token")))
