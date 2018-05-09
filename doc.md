@@ -3,7 +3,14 @@
 
 - 适用范围 : `unknow`
 - baseurl : `https://api.mp3.h-00.com`
+- version:v1
 
+## 访问方式:
+```
+{baseurl}/{version}/{method}?{params}
+e.g:
+https://api.mp3.h-00.com/v1/debug/user/login?username=......&password=......
+```
 
 ## 接口认证
 API 采用了 OAuth2 验证机制 (See [OAuth](https://en.wikipedia.org/wiki/OAuth), [RFC6749](https://tools.ietf.org/html/rfc6749)), 我们提供了 `AuthorizationCode Flow` 和 `ClientCredentials Flow`, 根据应用需求发放 Flow 权限.<br>
@@ -38,8 +45,6 @@ Params:
 ```
 ## DELETE `/user/token` 用户登出
 发送token进行注销，注销之后token立即失效<br>
-Params:
-- `access_token` string,用户token
 
 成功:
 ```
@@ -56,8 +61,6 @@ Params:
 }
 ```
 ## GET `/user/info` 获取用户信息
-Params:
-- `access_token` string,用户token
 
 
 成功:
@@ -81,9 +84,6 @@ Params:
 发送token来获取当前token有效期<br>
 **注意**:过期token将会在过期之后很短时间内消失并无法查询
 
-
-Params:
-- `access_token` string,用户token
 
 
 成功:
