@@ -107,7 +107,7 @@ Params:
 用户通过此接口注册，将会发送一封激活邮件<br>
 
 Params:
-- `username` string,用户名
+- `username` string,用户名 
 - `email` string,邮箱地址
 
 成功:
