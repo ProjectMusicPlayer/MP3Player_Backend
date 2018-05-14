@@ -10,7 +10,7 @@ func tokenCrt()string{
 
 func singToken(user string)(token string,err error){
 	token = tokenCrt()
-	timen := time.Now().Unix()
+	timen := time.Now().Unix()+86400
 	_,err = config.service.db.conn.Exec("insert into token values(?,?,?)",user,token,timen)
 	if(err!=nil){
 		return "",err
