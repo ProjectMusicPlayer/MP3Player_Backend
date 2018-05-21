@@ -228,12 +228,12 @@ func  GetRandomString(l int) string {
     return string(result)  
 }  
 
-func makeErrJson(errcode int,errdata interface{})(int , map[string]interface{}){
+func makeErrJson(httpstus int,errcode int,errdata interface{})(int , map[string]interface{}){
     var m map[string]interface{}
     m = make(map[string]interface{})
     m["error"] = errcode
     m["msg"] = fmt.Sprint(errdata)
-    return 200,m
+    return httpstus,m
 }
 
 func makeErrJson401(errcode int,errdata interface{})(int , map[string]interface{}){
