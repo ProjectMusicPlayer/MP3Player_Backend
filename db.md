@@ -7,7 +7,7 @@
 ### token token表
 - `username` string,用户名
 - `token` **(P)** string,token
-- `vaild time` int,有效期                                                 
+- `vaild time` int,有效期
 
 ### mp3 歌曲表
 - `id` **(P)** int,歌曲id

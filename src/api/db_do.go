@@ -155,7 +155,7 @@ func tokenDestory(token string)(err error){
 	return
 }//销毁一个用户的所有token
 func tokenDestoryByUser(user string)(err error){
-	_,err = config.service.db.conn.Exec("delete from token where user = ?",user)
+	_,err = config.service.db.conn.Exec("delete from token where username = ?",user)
 	return
 }
 
@@ -172,6 +172,30 @@ func writeMp3Data(){
 
 }
 
+func checkUserEmail(user string,email string)(err error){
+	rows,err := config.service.db.conn.Query("select * from user where username = ?",user)
+	var mail,pswd string
+	var rd int64
+	if(err!=nil){
+		return
+	}
+	defer rows.Close()
+	if(rows.Next()){
+		err = rows.Scan(&user,&pswd,&mail,&rd)
+		if(err!=nil){
+			return
+		}
+		if(mail==email){
+			return nil
+		}else{
+			return fmt.Errorf("incorrect username or email address")
+		}
+	}else{
+		return fmt.Errorf("incorrect username or email address")
+	}
+
+}
+
 func readMp3Data(id int){
 
 }
@@ -182,4 +206,13 @@ func searchMp3(key string){
 
 func getMp3Link(id int){
 
+}
+
+func addMp3DB(name string,singer string,books string,len int64,mp3addr string,lrcaddr string)(err error){
+	_,err = config.service.db.conn.Exec("insert into mp3 valuse(,?,?,?,?,?,?)",name,singer,books,len,mp3addr,lrcaddr)
+	if(err!=nil){
+		return err
+	}else{
+		return nil
+	}
 }
