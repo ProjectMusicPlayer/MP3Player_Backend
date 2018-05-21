@@ -17,7 +17,7 @@ func routerInit(){
 		})
 		//logout
 		v1.DELETE("/user/token",func(c *gin.Context){
-			c.JSON(user_logout(c.GetHeader("Authorization")))
+			c.JSON(user_logout(c.Query("token")))
 		})		
 		//getuserinfo
 		v1.GET("/user/info",func(c *gin.Context){
@@ -51,9 +51,16 @@ func routerInit(){
 		})		
 		v1.GET("/mp3s/:id/link",func(c *gin.Context){
 			
-		})		
+		})
+		//提交歌曲		
 		v1.POST("/mp3s",func(c *gin.Context){
-
+			c.JSON(addMp3(c.PostForm("name"),c.PostForm("singer"),c.PostForm("books"),c.PostForm("len"),c.PostForm("url"),c.PostForm("lrc")))
+		})
+		v1.POST("/user/forget",func(c *gin.Context){
+			c.JSON(forgetPswd(c.Query("username"),c.Query("email")))
+		})
+		v1.POST("/user/forget/callback",func(c *gin.Context){
+			c.JSON(forgetPswdCallback(c.PostForm("new"),c.PostForm("old"),c.PostForm("state")))
 		})
 
 		//debug	
