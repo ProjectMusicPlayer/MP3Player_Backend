@@ -17,19 +17,19 @@ func user_regisiter(user string,pswd string,email string)(code int,m map[string]
 	m = make(map[string]interface{})
 	err := pregCheck2(user,pswd,false)
 	if(err!=nil){
-		return makeErrJson(40001,err)
+		return makeErrJson(401,40001,err)
 	}
 	b,err := checkUser(user)
 	if(err!=nil){
-		return makeErrJson(40002,err)
+		return makeErrJson(401,40002,err)
 	}
 	if(b){
-		return makeErrJson(40003,"user already existes")
+		return makeErrJson(401,40003,"user already existes")
 	}
 	state := crtStateId()
 	err = writeState(state,user,pswd,email,"")
 	if(err!=nil){
-		return makeErrJson(40004,err)
+		return makeErrJson(401,40004,err)
 	}
 	err = sendmail(email,user,state)
 	return makeSuccessJson("send mail success")
@@ -67,7 +67,7 @@ func user_regisiter_mailRedirect(state string)(code int,data string){
 func user_login(user,passwd string)(int,map[string]interface{}){
 	err := pregCheck2(user,passwd,false)
 	if(err!=nil){
-		return makeErrJson(42000,err)
+		return makeErrJson(401,42000,err)
 	}
 	err = checkLoginUser(user,passwd)
 	if(err!=nil){
@@ -75,7 +75,7 @@ func user_login(user,passwd string)(int,map[string]interface{}){
 	}
 	token,err := singToken(user)
 	if(err!=nil){
-		return makeErrJson(42002,err)
+		return makeErrJson(401,42002,err)
 	}
     var m map[string]interface{}
     m = make(map[string]interface{})
@@ -89,7 +89,7 @@ func user_login(user,passwd string)(int,map[string]interface{}){
 func getUserInfo(token string)(int,map[string]interface{}){
 	err := pregCheck(token,false)
 	if(err!=nil){
-		return makeErrJson(42100,err)
+		return makeErrJson(401,42100,err)
 	}
 	data,err := readUserInfo(token)
 	if(err!=nil){
@@ -107,11 +107,11 @@ func getUserInfo(token string)(int,map[string]interface{}){
 func user_logout(token string)(int,map[string]interface{}){
 	err := pregCheck(token,false)
 	if(err!=nil){
-		return makeErrJson(43000,err)
+		return makeErrJson(401,43000,err)
 	}
 	err = tokenDestory(token)
 	if(err!=nil){
-		return makeErrJson(43000,err)
+		return makeErrJson(401,43000,err)
 	}
 	return makeSuccessJson("logout success")
 
@@ -143,4 +143,41 @@ func changePswd(token,old,new string)(int,map[string]interface{}){
 		return makeErrJson401(42203,err)
 	}
 	return makeSuccessJson("update password successfully")
+}
+
+func forgetPswd(user,email string)(int,interface{}){
+	err := pregCheck(user,false)
+	if(err!=nil){
+		return makeErrJson(401,40110,err)
+	}
+	state := crtStateId()
+	err = writeState(state,user,"forget","","")
+	if(err!=nil){
+		return makeErrJson(401,40111,err)
+	}
+	err = sendmailf(email,user,state)
+	if(err!=nil){
+		return makeErrJson(401,40112,err)
+	}
+	return makeSuccessJson("send mail success")
+}
+
+func forgetPswdCallback(new,old,state string)(int,interface{}){
+	err := pregCheck2(old,new,false)
+	if(err!=nil){
+		return makeErrJson(403,40301,err)
+	}
+	var user,data1 string
+	user,data1,_,_,_,err,errcode := readState(state)
+	if(data1=="forget"){
+		return makeErrJson(403,errcode,"invaild state data")
+	}
+	if(new!=old||new==""){
+		return makeErrJson(401,40103,fmt.Errorf("inviald password"))
+	}
+	err = changePswdDB(user,new)
+	if(err!=nil){
+		return makeErrJson(403,40304,err)
+	}
+	return makeSuccessJson("change password success")
 }
