@@ -257,8 +257,8 @@ Params:
 
 ```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
@@ -278,9 +278,9 @@ Params:
 
 ```json
 {
-    error:"0",   //成功代码0
-    msg:"update song info success", //成功消息
-    id:"{mp3id}"    //上传的mp3 id
+    "error":"0",   //成功代码0
+    "msg":"update song info success", //成功消息
+    "id":"{mp3id}"    //上传的mp3 id
 }
 ```
 
@@ -288,8 +288,8 @@ Params:
 
 ```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
@@ -306,8 +306,8 @@ Params:
 
 ```json
 {
-    error:"0",   //成功代码0
-    msg:"report success", //成功消息
+    "error":"0",   //成功代码0
+    "msg":"report success", //成功消息
 }
 ```
 
@@ -315,8 +315,8 @@ Params:
 
 ```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
