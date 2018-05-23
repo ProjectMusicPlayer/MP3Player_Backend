@@ -1,11 +1,10 @@
 # MP3Player 接口文档
 
-
 - 适用范围 : `unknow`
 - baseurl : `https://api.mp3.h-00.com`
 - version:v1
 
-## 访问方式:
+## 访问方式
 
 ```url
 {baseurl}/{version}/{method}?{params}
@@ -15,7 +14,8 @@ https://api.mp3.h-00.com/v1/debug/user/login?username=......&password=......
 
 ## 接口认证
 
-API 采用了 OAuth2 验证机制 (See [OAuth](https://en.wikipedia.org/wiki/OAuth), [RFC6749](https://tools.ietf.org/html/rfc6749)), 我们提供了 `AuthorizationCode Flow` 和 `ClientCredentials Flow`, 根据应用需求发放 Flow 权限.<br>
+API 采用了 OAuth2 验证机制 (See [OAuth](https://en.wikipedia.org/wiki/OAuth), [RFC6749](https://tools.ietf.org/html/rfc6749)), 我们提供了 `AuthorizationCode Flow` 和 `ClientCredentials Flow`, 根据应用需求发放 Flow 权限.
+
 在获取到 `AccessToken` 之后, 使用请求头 `Authorization` (Previously `X-Access-Token`, `Authorization` is preferred.) 携带 Token ,并使用请求头`secret`携带应用密钥,访问 API.
 
 ## FAQ
@@ -40,10 +40,10 @@ Params:
 
 ```json
 {
-    error:"0",   //成功代码0
-    msg:"login success", //成功消息
-    access_token:"{access_token}",   //用户的token
-    invaildtime:"{timestamp}"   //token有效期，一般为7天
+    "error":"0",   //成功代码0
+    "msg":"login success", //成功消息
+    "access_token":"{access_token}",   //用户的token
+    "invaildtime":"{timestamp}"   //token有效期，一般为7天
 }
 ```
 
@@ -51,8 +51,8 @@ Params:
 
 ```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
@@ -65,8 +65,8 @@ Params:
 ```json
 
 {
-    error:"0",   //成功代码0
-    msg:"logout success", //成功消息
+    "error":"0",   //成功代码0
+    "msg":"logout success", //成功消息
 }
 ```
 
@@ -74,8 +74,8 @@ Params:
 
 ```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
@@ -85,9 +85,9 @@ Params:
 
 ```json
 {
-    error:"0",   //成功代码0
-    msg:"get user info success", //成功消息
-    usrname:"{username}"    //用户名
+    "error":"0",   //成功代码0
+    "msg":"get user info success", //成功消息
+    "usrname":"{username}"    //用户名
 }
 ```
 
@@ -95,25 +95,26 @@ Params:
 
 ```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
 ## GET `/user/token/info` 获取token过期信息
 
-发送token来获取当前token有效期<br>
+发送token来获取当前token有效期
+
 **注意**:过期token将会在过期之后很短时间内消失并无法查询
 
 成功:
 
 ```json
 {
-    error:"0",   //成功代码0
-    msg:"get token status success", //成功消息
-    queryTimeStamp:"{timestamp}", //查询时间
-    vaild:"{vaild}",    //token状态 1有效，2无效
-    vaildTime:"{timestamp}" //token过期时间
+    "error":"0",   //成功代码0
+    "msg":"get token status success", //成功消息
+    "queryTimeStamp":"{timestamp}", //查询时间
+    "vaild":"{vaild}",    //token状态 1有效，2无效
+    "vaildTime":"{timestamp}" //token过期时间
 }
 ```
 
@@ -121,8 +122,8 @@ Params:
 
 ```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
@@ -132,7 +133,7 @@ Params:
 
 Params:
 
-- `username` string,用户名 
+- `username` string,用户名
 - `password` string,密码
 - `email` string,邮箱地址
 
@@ -140,18 +141,18 @@ Params:
 
 ```json
 {
-    error:"0",   //成功代码0
-    msg:"send mail success", //成功消息
-    vaildTime:"{timestamp}" //mail过期时间
+    "error":"0",   //成功代码0
+    "msg":"send mail success", //成功消息
+    "vaildTime":"{timestamp}" //mail过期时间
 }
 ```
 
 错误:
 
-```jaon
+```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
@@ -170,9 +171,9 @@ Params:
 
 ```json
 {
-    error:"0",   //成功代码0
-    msg:"send mail success", //成功消息
-    vaildTime:"{timestamp}" //mail过期时间
+    "error":"0",   //成功代码0
+    "msg":"send mail success", //成功消息
+    "vaildTime":"{timestamp}" //mail过期时间
 }
 ```
 
@@ -180,8 +181,8 @@ Params:
 
 ```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
@@ -198,9 +199,9 @@ Params:
 
 ```json
 {
-    error:"0",   //成功代码0
-    msg:"send mail success", //成功消息
-    vaildTime:"{timestamp}" //mail过期时间
+    "error":"0",   //成功代码0
+    "msg":"send mail success", //成功消息
+    "vaildTime":"{timestamp}" //mail过期时间
 }
 ```
 
@@ -208,8 +209,8 @@ Params:
 
 ```json
 {
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
+    "error":"{error_code}",   //错误代码
+    "msg":"{error_massage}" //错误消息
 }
 ```
 
@@ -221,65 +222,34 @@ Params:
 
 Params:
 
-- `keyword` string,歌曲关键词
+- `key` string,歌曲关键词
 
 成功:
 
 ```json
 {
-    error:"0",   //成功代码0
-    msg:"get token status success", //成功消息
-    data:[  //返回结果数组(无数据则返回空数组)
-        {
-            id:"{id}"   //歌曲id
-            name:"{name}"   //歌名
-            singer:"{singer}"   //歌手
-            books:"{books}" //专辑
-            length:"{length}"   //歌曲长度
+    "arrayLength":2,
+    "data":
+    {
+        "0":{
+            "books":"98765",
+            "id":1,"length":8767890,
+            "lrcaddress":"9876",
+            "mpeaddress":"98765","name":"0987654",
+            "singer":"9876"
         },
-        {
-            id:"{id}"   //歌曲id
-            name:"{name}"   //歌名
-            singer:"{singer}"   //歌手
-            books:"{books}" //专辑
-            length:"{length}"   //歌曲长度
-        },
-        {
-            id:"{id}"   //歌曲id
-            name:"{name}"   //歌名
-            singer:"{singer}"   //歌手
-            books:"{books}" //专辑
-            length:"{length}"   //歌曲长度
+        "1":{
+            "books":"9876576",
+            "id":2,
+            "length":876789076,
+            "lrcaddress":"987676",
+            "mpeaddress":"98765767",
+            "name":"0987654765",
+            "singer":"98768765"
         }
-    ]
-}
-```
-
-错误:
-
-```json
-{
-    error:"{error_code}",   //错误代码
-    msg:"{error_massage}" //错误消息
-}
-```
-
-## GET `/mp3s/{mp3id}/link` 获取下载链接
-
-通过搜索结果的歌曲id返回cdn下载链接
-
-Params:
-
-- `mp3id` string,歌曲id
-
-成功:
-
-```json
-{
-    error:"0",   //成功代码0
-    msg:"get token status success", //成功消息
-    url:"{url}",    //下载列表
-    size:"{size}"   //文件大小
+    },
+    "error":0,
+    "mag":"get mp3 success"
 }
 ```
 

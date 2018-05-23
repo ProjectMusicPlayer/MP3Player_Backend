@@ -1,7 +1,7 @@
 /*
 *   @author SJC
 *   @工具集，包含md5，sha1，AES加密解密算法，以及签名和校验签名工具
-*   @18.4.28
+*   @18.5.23
 */
 
 package main
@@ -154,6 +154,18 @@ func pregCheck4(p1 string,p2 string,p3 string,p4 string,ept bool)error{
             return fmt.Errorf("invaild empty params")
         }
     }
+}
+
+func pregCheckChinese(key string)(err error){
+    pregstr := "[\u4e00-\u9fa5\\w]+"
+    b,err := regexp.MatchString(pregstr,key)
+    if(err!=nil){
+        return err
+    }
+    if(!b){
+        return fmt.Errorf("invaild params")
+    }
+    return nil
 }
 
 //app_key   nonce   school_code timestamp

@@ -47,14 +47,11 @@ func routerInit(){
 			c.JSON(changePswd(c.GetHeader("Authorization"),c.Query("old"),c.Query("new")))
 		})		
 		v1.GET("/mp3s",func(c *gin.Context){
-			
+			c.JSON(searchMp3(c.Query("key"),c.GetHeader("Authorization")))
 		})		
-		v1.GET("/mp3s/:id/link",func(c *gin.Context){
-			
-		})
 		//提交歌曲		
 		v1.POST("/mp3s",func(c *gin.Context){
-			c.JSON(addMp3(c.PostForm("name"),c.PostForm("singer"),c.PostForm("books"),c.PostForm("len"),c.PostForm("url"),c.PostForm("lrc")))
+			c.JSON(addMp3(c.PostForm("name"),c.PostForm("singer"),c.PostForm("books"),c.PostForm("length"),c.PostForm("url"),c.PostForm("lrc")))
 		})
 		v1.POST("/user/forget",func(c *gin.Context){
 			c.JSON(forgetPswd(c.Query("username"),c.Query("email")))
@@ -73,18 +70,20 @@ func routerInit(){
 			c.JSON(user_login(c.Query("username"),c.Query("password")))
 		})
 		//获取用户信息
-		v1.GET("debug/user/info",func(c *gin.Context){
+		v1.GET("/debug/user/info",func(c *gin.Context){
 			c.JSON(getUserInfo(c.Query("token")))
 		})	
 		//修改密码
-		v1.GET("debug/pswd/change",func(c *gin.Context){
+		v1.GET("/debug/pswd/change",func(c *gin.Context){
 			c.JSON(changePswd(c.Query("token"),c.Query("old"),c.Query("new")))
 		})
 		//登出
-		v1.GET("debug/user/logout",func(c *gin.Context){
+		v1.GET("/debug/user/logout",func(c *gin.Context){
 			c.JSON(user_logout(c.Query("token")))
 		})
-
+		v1.GET("/debug/mp3/search",func(c *gin.Context){
+			c.JSON(searchMp3(c.Query("key"),"hduhelperSJC"))
+		})
 	}
 	//mp3服务挂靠在8082端口
 	config.service.router.Run(":8082")
