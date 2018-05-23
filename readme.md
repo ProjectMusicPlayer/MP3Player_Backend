@@ -24,7 +24,7 @@
 
 ## 后台实现流程
 
-![img/worl.png]
+![流程图](img/worl.png)
 
 ---
 
