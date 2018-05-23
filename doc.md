@@ -323,6 +323,6 @@ Params:
 ---
 
 - `@Autor` : `SJC`
-- `@version` : `1.1`
-- `@lastUpdate` : `18.5.5 14:03`
+- `@version` : `1.3`
+- `@lastUpdate` : `18.5.23 14:03`
 - [The JSON License](http://www.json.org/license.html)
