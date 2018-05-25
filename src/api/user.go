@@ -155,7 +155,7 @@ func forgetPswd(user,email string)(int,interface{}){
 	if(err!=nil){
 		return makeErrJson(401,40111,err)
 	}
-	err = sendmailf(email,user,state)
+	err = sendMailApi2(email,user,state)
 	if(err!=nil){
 		return makeErrJson(401,40112,err)
 	}
@@ -169,7 +169,7 @@ func forgetPswdCallback(new,old,state string)(int,interface{}){
 	}
 	var user,data1 string
 	user,data1,_,_,_,err,errcode := readState(state)
-	if(data1=="forget"){
+	if(data1!="forget"){
 		return makeErrJson(403,errcode,"invaild state data")
 	}
 	if(new!=old||new==""){

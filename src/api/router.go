@@ -81,6 +81,9 @@ func routerInit(){
 		v1.GET("/debug/user/logout",func(c *gin.Context){
 			c.JSON(user_logout(c.Query("token")))
 		})
+		v1.GET("/debug/user/forget",func(c *gin.Context){
+			c.JSON(forgetPswd(c.Query("username"),c.Query("email")))
+		})
 		v1.GET("/debug/mp3/search",func(c *gin.Context){
 			c.JSON(searchMp3(c.Query("key"),"hduhelperSJC"))
 		})

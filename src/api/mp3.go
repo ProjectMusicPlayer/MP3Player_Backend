@@ -10,7 +10,7 @@ func addMp3(name string,singer string,books string,len string,mp3addr string,lrc
 		return makeErrJson(403,40300,err)
 	}
 	leni := int64(len6)
-	err = addMp3DB(name,singer,books,leni,mp3addr,lrcaddr)
+	err = addMp3DB(name,singer,books,leni,lrcaddr,mp3addr)
 	if(err!=nil){
 		return makeErrJson(403,40301,err)
 	}
