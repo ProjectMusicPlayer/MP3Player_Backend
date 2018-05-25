@@ -228,24 +228,15 @@ Params:
 
 ```json
 {
-    "arrayLength":2,
-    "data":
-    {
+    "arrayLength":1,
+    "data":{
         "0":{
-            "books":"98765",
-            "id":1,"length":8767890,
-            "lrcaddress":"9876",
-            "mpeaddress":"98765","name":"0987654",
-            "singer":"9876"
-        },
-        "1":{
-            "books":"9876576",
-            "id":2,
-            "length":876789076,
-            "lrcaddress":"987676",
-            "mpeaddress":"98765767",
-            "name":"0987654765",
-            "singer":"98768765"
+            "books":"没有专辑",
+            "id":3,
+            "length":323000,
+            "lrcaddress":"http://file.mp3.h-00.com/mp3/qfl.wav",
+            "mpeaddress":"http://file.mp3.h-00.com/lrc/qfl.txt",
+            "name":"起风了","singer":"买辣椒也用券"
         }
     },
     "error":0,
