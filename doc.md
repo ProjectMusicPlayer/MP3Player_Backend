@@ -234,8 +234,8 @@ Params:
             "books":"没有专辑",
             "id":3,
             "length":323000,
-            "lrcaddress":"http://file.mp3.h-00.com/mp3/qfl.wav",
-            "mpeaddress":"http://file.mp3.h-00.com/lrc/qfl.txt",
+            "lrcaddress":"http://file.mp3.h-00.com/lrc/qfl.txt",
+            "mp3address":"http://file.mp3.h-00.com/mp3/qfl.wav",
             "name":"起风了","singer":"买辣椒也用券"
         }
     },

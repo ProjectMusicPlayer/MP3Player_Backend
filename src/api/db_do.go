@@ -221,7 +221,7 @@ func readMp3Data(key string)(data map[int]interface{},arrlength int,err error){
 		d["singer"] = singer
 		d["books"] = books
 		d["length"] = len
-		d["mpeaddress"] = mp3addr
+		d["mp3address"] = mp3addr
 		d["lrcaddress"] = lrcaddr
 		data[i] = d
 		i++
