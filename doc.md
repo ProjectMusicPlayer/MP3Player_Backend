@@ -244,6 +244,30 @@ Params:
 }
 ```
 
+## GET `/mp3/id` 获取搜索结果列表
+
+发送搜索关键词获取搜索结果数组
+
+Params:
+
+- `id` string,歌曲关键词
+
+成功:
+
+```json
+{
+    "data":{
+        "id":4,
+        "books":"没有专辑",
+        "length":323000,
+        "name":"起风了",
+        "singer":"买辣椒也用券"
+    },
+    "error":0,
+    "mag":"get mp3 success"
+}
+```
+
 错误:
 
 ```json
